@@ -2,7 +2,27 @@ import random
 import sys
 import time
 
+def output_instructions() -> None:
+    with open('../README.md', 'r') as f:
+        reached_desired_section = False
+        for line in f:
+            line = line.rstrip()
+            if line.startswith('  -'):
+                if reached_desired_section:
+                    break
+                elif '  - The friends lists' in line:
+                    print()
+                    reached_desired_section = True
+            if reached_desired_section:
+                print(line)
+    print()
+    sys.exit()
+
 def main():
+    if 'readme' in [arg.lower() for arg in sys.argv]:
+        output_instructions()
+    
+
     server_size = int(sys.argv[1])
     num_players = int(sys.argv[2])
     lower_bound = int(sys.argv[3])
